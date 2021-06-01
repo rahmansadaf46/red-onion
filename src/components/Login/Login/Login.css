@@ -1,0 +1,7 @@
+.login-container {
+    background: url('../../../fakeData/images/signup-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    width:auto;
+    height:720px;
+    
+}

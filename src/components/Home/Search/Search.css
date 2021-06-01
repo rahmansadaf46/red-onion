@@ -1,0 +1,21 @@
+.search-container {
+    width:auto;
+    height:570px;
+    position:relative;
+    padding: auto;
+    background-image: url('../../../fakeData/images/bannerbackground.png');
+    background-size: cover;
+    background-position: center;
+}
+.headline{
+    font-size:50px;
+    padding-top:200px;
+}
+.search-food{
+    border-radius: 30px;
+    border: none;
+    width:570px;
+    height:40px;
+    z-index: -1;
+    outline: none;
+}
