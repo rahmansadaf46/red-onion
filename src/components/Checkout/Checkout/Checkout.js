@@ -78,10 +78,12 @@ const Checkout = () => {
     }
     const formatNumber = num => {
         const precision = num.toFixed(2);
+        // setAmount(precision);
         return Number(precision);
     }
 
     let total = 5.00 + 2.00 + subTotal;
+ 
     const [success, setSuccess] = useState(false);
     const [flat, setFlat] = useState(false);
     const [house, setHouse] = useState(false);
@@ -124,6 +126,7 @@ const Checkout = () => {
             cart: cart,
             address: address,
             email: sessionStorage.getItem('email'),
+            amount: formatNumber(total),
             status: 'Pending'
         }
         // console.log(cart, address)

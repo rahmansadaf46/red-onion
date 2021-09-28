@@ -7,6 +7,7 @@ import {
 import './App.css';
 import AddFood from "./components/Admin/AddFood/AddFood";
 import AllFood from "./components/Admin/AllFood/AllFood";
+import Customer from "./components/Admin/Customer/Customer";
 import DeliveryOrder from "./components/Admin/DeliveryOrder/DeliveryOrder";
 import PendingOrder from "./components/Admin/PendingOrder/PendingOrder";
 import Checkout from "./components/Checkout/Checkout/Checkout";
@@ -48,13 +49,16 @@ function App() {
             <PendingOrder></PendingOrder>
           </Route>
           <Route path="/admin/delivery">
-         <DeliveryOrder></DeliveryOrder>
+            <DeliveryOrder></DeliveryOrder>
           </Route>
           <Route path="/admin/addFood">
-          <AddFood></AddFood>
+            <AddFood></AddFood>
           </Route>
           <Route path="/admin/foodList">
-         <AllFood></AllFood>
+            <AllFood></AllFood>
+          </Route>
+          <Route path="/admin/customer">
+            <Customer></Customer>
           </Route>
           <Route path="/">
             <Home></Home>

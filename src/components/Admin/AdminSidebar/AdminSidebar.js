@@ -1,4 +1,4 @@
-import {  faPlus, faCookieBite ,faThList,faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {  faPlus, faCookieBite ,faThList,faCheckCircle,faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -30,6 +30,13 @@ const AdminSidebar = () => {
                 <li>
                     <Link to="/admin/foodList" className="">
                         <span style={{color: '#E51A4B', fontWeight: 'bold'}}> <FontAwesomeIcon icon={faThList} /> Food List</span>
+                    </Link>
+                </li>
+                <br />
+      
+                <li>
+                    <Link to="/admin/customer" className="">
+                        <span style={{color: '#E51A4B', fontWeight: 'bold'}}> <FontAwesomeIcon icon={faUserFriends} /> Customers</span>
                     </Link>
                 </li>
 
