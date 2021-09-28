@@ -3,9 +3,9 @@ import { Redirect, Route } from 'react-router-dom';
 import { UserContext } from '../../../App';
 
 const PrivateRoute = ({ children, ...rest }) => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext)
-    console.log('This is children', children);
-    console.log('This is rest', rest);
+    const [loggedInUser] = useContext(UserContext)
+    // console.log('This is children', children);
+    // console.log('This is rest', rest);
     return (
         <Route
             {...rest}

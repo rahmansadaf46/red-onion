@@ -32,6 +32,7 @@ const CartItem = (props) => {
     const incrementCount = () => {
         setCount(count + 1);
         props.handleAddProduct(props.item);
+        // props.handleAddProduct(props.product)
     };
 
     const decrementCount = () => {
@@ -60,10 +61,9 @@ const CartItem = (props) => {
                     props.showAddToCart === true &&
                     <div style={{ width: '10px' }} className="col-md-6">
                         <div className="input-group item-area">
-                            <input onClick={() => props.handleRemoveProduct(props.product), decrementCount} type="button" defaultValue="-" className="button-minus" data-field="quantity" />
-                            <input style={{ fontSize: '15px' }} onChange={(event) => {
-                            }, () => removeProduct(item.id)} type="number" value={count} step={1} max defaultValue={1} name="quantity" className="quantity-field" />
-                            <input onClick={() => props.handleAddProduct(props.product), incrementCount} type="button" defaultValue="+" className="button-plus" data-field="quantity" />
+                            <input onClick={() =>  decrementCount()} type="button" defaultValue="-" className="button-minus" data-field="quantity" />
+                            <input style={{ fontSize: '15px' }} onChange={ () => removeProduct(item.id)} type="number" value={count} step={1} max defaultValue={1} name="quantity" className="quantity-field" />
+                            <input onClick={() =>  incrementCount()} type="button" defaultValue="+" className="button-plus" data-field="quantity" />
                         </div>
                     </div>
 

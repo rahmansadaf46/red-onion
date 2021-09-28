@@ -1,11 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import Footer from '../../Shared/Footer/Footer';
-import Header from '../../Shared/Header/Header';
 import logo from '../../../fakeData/images/logo2.png';
 import './Login.css';
 import { Button, Form } from 'react-bootstrap';
-import { handleSignOut, initializeLoginFramework, signInWithEmailAndPassword } from '../firebase/loginManager';
+import {  initializeLoginFramework, signInWithEmailAndPassword } from '../firebase/loginManager';
 import { UserContext } from '../../../App';
 
 const Login = () => {
@@ -21,7 +19,7 @@ const Login = () => {
     const [btn, setBtn] = useState(true);
 
     initializeLoginFramework();
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const [, setLoggedInUser] = useContext(UserContext);
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };

@@ -4,12 +4,11 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { UserContext } from '../../../App';
 import logo from '../../../fakeData/images/logo2.png';
 
-import Footer from '../../Shared/Footer/Footer';
-import Header from '../../Shared/Header/Header';
+
 import { createUserWithEmailAndPassword, initializeLoginFramework } from '../firebase/loginManager';
 
 const SignUp = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const [ setLoggedInUser] = useContext(UserContext);
     const [user, setUser] = useState({
         isSignedIn: false,
         name: '',

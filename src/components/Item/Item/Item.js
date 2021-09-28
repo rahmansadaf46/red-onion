@@ -18,7 +18,7 @@ const Item = () => {
         const food = fakeData.find(pd => pd.id === id);
         setItem(food);
         window.scrollTo(0, 0);
-    }, [item])
+    }, [id])
     const [cart, setCart] = useState([]);
     useEffect(() => {
         const savedCart = getDatabaseCart();

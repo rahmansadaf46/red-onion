@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+
 import fakeData from '../../../fakeData';
 import { addToDatabaseCart, getDatabaseCart, minusToDatabaseCart, processOrder, removeFromDatabaseCart } from '../../../utilities/databaseManager';
 import Footer from '../../Shared/Footer/Footer';
@@ -9,8 +8,8 @@ import CartItem from '../CartItem/CartItem';
 
 const Checkout = () => {
     const [cart, setCart] = useState([]);
-    const [count, setCount] = useState(1);
-
+    const [count] = useState(1);
+    
 
     const handleAddProduct = (product) => {
         const toBeAddedKey = product.id;
@@ -70,7 +69,7 @@ const Checkout = () => {
         })
 
         setCart(previousCart);
-    }, [cart])
+    }, [])
 
     let subTotal = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -83,42 +82,111 @@ const Checkout = () => {
     }
 
     let total = 5.00 + 2.00 + subTotal;
-
-    const handlePlaceOrder = () => {
-        setCart([]);
+    const [success, setSuccess] = useState(false);
+    const [flat, setFlat] = useState(false);
+    const [house, setHouse] = useState(false);
+    const [area, setArea] = useState(false);
+    const [contact, setContact] = useState(false);
+    const [address, setAddress] = useState({
+        flatNo: '',
+        houseNo: '',
+        area: '',
+        contactNo: '',
+    });
+    const handleChange = (e) => {
+        // console.log(e.target.name, e.target.value)
+        
+        if (e.target.name === 'flatNo') {
+          setFlat(e.target.value.length > 0);
+        }
+        if (e.target.name === 'houseNo') {
+            setHouse(e.target.value.length > 0);
+        }
+        if (e.target.name === 'area') {
+            setArea(e.target.value.length > 0);
+        }
+        if (e.target.name === 'contactNo') {
+            setContact(e.target.value.length > 0);
+        }
+        if (flat && house && contact && area) {
+            setSuccess(true)
+            // console.log('successfully')
+        }
+        // console.log(flat ,house,area,contact)
+        const newUserInfo = { ...address };
+        newUserInfo[e.target.name] = e.target.value;
+        setAddress(newUserInfo);
+     
+    }
+    const handlePlaceOrder = (e) => {
+        e.preventDefault();
+        const finalData ={
+            cart: cart,
+            address: address,
+            email: sessionStorage.getItem('email'),
+            status: 'Pending'
+        }
+        // console.log(cart, address)
+        
+       
+         
+        // setCart([]);
+     
+        if(success === true) {
+            fetch('http://localhost:4200/addOrder', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({finalData})
+            })
+                .then(res => res.json())
+                .then(success => {
+                    window.location.assign('/shipment');
+                    if (success) {
+                      
+                    }
+                })
+        }else{
+            window.alert('please enter your address')
+        }
         processOrder();
+        
     }
     return (
         <div>
             <Header cart={cart.length}></Header>
+            <form>
             <div className="container mt-5 pt-5">
                 <div className="row">
                     <div className="col-md-6">
                         <h4>Edit Delivery Details</h4>
                         <hr style={{ width: '450px', marginRight: '100px', borderTop: '2px solid 	#C8C8C8' }} />
-                        <Form style={{ width: '450px' }}>
-                            <Form.Group controlId="formBasicName">
-                                <Form.Control style={{ height: "50px", background: '#F5F5F5' }} type="" placeholder="Flat no." />
-                            </Form.Group>
-                            <Form.Group className="mt-4" controlId="">
-                                <Form.Control style={{ height: "50px", background: '#F5F5F5' }} type="" placeholder="House no." />
+                      
+                                <input  onChange={handleChange} name="flatNo" style={{ height: "50px", borderRadius: '30px',border: '1px solid gray',width: '75%'}} className="pl-4" type="" required placeholder="Flat no." />
+                                <br />
+                                <br />
+                                <input  onChange={handleChange} name="houseNo" style={{ height: "50px", borderRadius: '30px',border: '1px solid gray',width: '75%'}} className="pl-4" type="" required placeholder="House no." />
+                                <br />
+                                <br />
+                                <input  onChange={handleChange} name="area" style={{ height: "50px", borderRadius: '30px',border: '1px solid gray',width: '75%'}} className="pl-4" type="" required placeholder="Area" />
+                                <br />
+                                <br />
+                                <input  onChange={handleChange} name="contactNo" style={{ height: "50px", borderRadius: '30px',border: '1px solid gray',width: '75%'}} className="pl-4" type="" required placeholder="Contact no." />
+                            {/* <Form.Group className="mt-4" controlId="">
+                                
                             </Form.Group>
 
                             <Form.Group className="mt-4" controlId="formBasicPassword">
-                                <Form.Control style={{ height: "50px", background: '#F5F5F5' }} type="" placeholder="Area" />
+                              
                             </Form.Group>
                             <Form.Group className="mt-4" controlId="formBasicPassword">
-                                <Form.Control style={{ height: "50px", background: '#F5F5F5' }} type="" placeholder="Contact no." />
-                            </Form.Group>
-                            <Form.Group className="mt-4" controlId="formBasicPassword">
-                                <Form.Control style={{ height: "80px", background: '#F5F5F5', paddingBottom: '50px' }} type="" placeholder="Add delivery instruction..." />
+                               
                             </Form.Group>
 
                             <Button style={{ padding: '10px 164px' }} variant="danger" type="submit">
-                                Save & Continue</Button>
+                                Save & Continue</Button> */}
                             <br />
                             <br />
-                        </Form>
+                        
                     </div>
                     <div style={{ marginLeft: '190px' }} className="col-md-4 ">
                         <p>Form <b>Gulshan Plaza Restaurant GPR</b></p>
@@ -149,7 +217,7 @@ const Checkout = () => {
                                                 <h4><b>${formatNumber(total)}</b></h4>
                                             </div>
                                         </div>
-                                        <Link onClick={handlePlaceOrder} to="/shipment" style={{ padding: '10px 132px' }} className="btn btn-danger my-4">Place Order</Link>
+                                        <input onClick={handlePlaceOrder} type="submit" style={{ padding: '10px 132px' }} placeholder="Place Order" className="btn btn-danger my-4"/>
                                     </div>
                                 </div>
                                 : <div className="d-flex justify-content-center">
@@ -159,6 +227,7 @@ const Checkout = () => {
                     </div>
                 </div>
             </div>
+            </form>
             <Footer></Footer>
         </div>
     );

@@ -124,7 +124,7 @@ const fakeData = [{
 },
 {
     "id": "15",
-    title: "Pork Tenderloin With Quinoa Pilaf",
+    title: "Beef Tenderloin With Quinoa Pilaf",
     category: "dinner",
     price: 12.99,
     image: dinner5

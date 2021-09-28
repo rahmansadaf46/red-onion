@@ -69,6 +69,7 @@ export const signInWithEmailAndPassword = (email, password) => {
             newUserInfo.error = '';
             newUserInfo.success = true;
             sessionStorage.setItem('name', newUserInfo.displayName);
+            sessionStorage.setItem('email', newUserInfo.email);
             setUserToken();
             return newUserInfo;
         })
