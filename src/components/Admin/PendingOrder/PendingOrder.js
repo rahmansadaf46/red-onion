@@ -29,9 +29,12 @@ const PendingOrder = () => {
                     <div className="">
                         
                         <div>{
-                                    food.map(fd=><div style={{ width: '700px',height: '100%' ,border: '1px solid lightYellow',borderRadius: '30px',backgroundColor: 'lightYellow',marginBottom: '25px',padding: '30px'}}>{fd.finalData.cart.map(item=><p style={{fontSize: '18px'}}><span className="font-weight-bold text-danger">{item.title}</span> <span className="font-weight-bold text-dark">: {item.quantity}pcs</span></p>)} <br />
+                                    food.map(fd=><div style={{ width: '700px',height: '100%' ,border: '1px solid lightYellow',borderRadius: '30px',backgroundColor: 'lightYellow',marginBottom: '25px',padding: '30px'}}>
+                                        <div className="font-weight-bold">Order No: <span style={{color: 'purple'}}>{fd._id.split("").slice(15, 50)}</span></div>
+                                        <br />
+                                        {fd.finalData.cart.map(item=><p style={{fontSize: '18px'}}><span className="font-weight-bold text-danger">{item.title}</span> <span className="font-weight-bold text-dark">: {item.quantity}pcs</span></p>)} <br />
                                   <div style={{border: '2px solid red',padding: '15px'}}>
-                                  <p className="font-weight-bold text-danger">Address: Flat No {fd.finalData.address.flatNo}, House No {fd.finalData.address.houseNo}, {fd.finalData.address.area}</p>
+                                  <p className="font-weight-bold ">Address: <span className="text-danger">Flat No {fd.finalData.address.flatNo}, House No {fd.finalData.address.houseNo}, {fd.finalData.address.area}</span></p>
                                    <p className="font-weight-bold">Contact: <span className="text-primary">{fd.finalData.address.contactNo}</span></p>
                                    <p className="font-weight-bold text-dark">Email: <span className="text-primary">{fd.finalData.email}</span></p>
                                   </div>

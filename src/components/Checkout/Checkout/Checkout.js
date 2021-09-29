@@ -122,8 +122,18 @@ const Checkout = () => {
     }
     const handlePlaceOrder = (e) => {
         e.preventDefault();
+        const tempArray = []
+        if(cart.length){
+            cart.forEach((food)=>{
+                tempArray.push({
+                    title: food.title,
+                    quantity: food.quantity
+
+                })
+            })
+        }
         const finalData ={
-            cart: cart,
+            cart: tempArray,
             address: address,
             email: sessionStorage.getItem('email'),
             amount: formatNumber(total),
