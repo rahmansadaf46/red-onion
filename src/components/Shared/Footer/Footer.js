@@ -28,7 +28,7 @@ const Footer = () => {
                 </div>
                 <div className=" row pb-5 pt-5">
                     <div style={{ marginRight: '190px' }} className="col-md-4 ">
-                        <small style={{ color: 'lightGray' }}>Copyright @2021 || Sadaf Rahman</small>
+                        <small style={{ color: 'lightGray' }}>Copyright @2021 || Team Abir Illin</small>
                     </div>
                     <div className="col-md-2 text-right">
                         <Link className="text-white">Privacy Policy.</Link>

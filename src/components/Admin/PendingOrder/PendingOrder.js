@@ -13,11 +13,35 @@ const PendingOrder = () => {
 
                 // }
                 // const email= sessionStorage.getItem('email')
-                // const items = data.filter(item => item.finalData.email === email)
+                const items = data.filter(item => item.finalData.status === "Pending")
                 // console.log(items,data)
-                setFood(data);
+                setFood(items);
             })
     }, [])
+    const handleChange = (data) =>{
+        console.log(data,"clicked")
+        
+        const finalData= {
+            address: data.finalData.address,
+            amount: data.finalData.amount,
+            cart: data.finalData.cart, 
+            email: data.finalData.email,
+            status: "Delivered"
+        }
+     
+        fetch(`http://localhost:4200/updateOrder/${data._id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(finalData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                window.location.reload();
+                }
+            })
+
+    }
     return (
         <div>
              <AdminHeader />
@@ -25,9 +49,13 @@ const PendingOrder = () => {
              <div className="col-md-2">
                     <AdminSidebar />
                 </div>
-                <div style={{ backgroundColor: '#FFF0F0', height: '100%' }} className="col-md-10 pt-4 d-flex justify-content-center">
+              
+                {
+                    food.length === 0 ?<div style={{ backgroundColor: '#FFF0F0', height: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center"><h2 className="text-danger">Loading...</h2></div> : <div style={{ backgroundColor: '#FFF0F0', height: '100%',minHeight: '800px'}} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
-                        
+                    <div  className="text-center pb-3 text-danger">
+                      <h2><u>Pending Order</u></h2>
+                      </div>
                         <div>{
                                     food.map(fd=><div style={{ width: '700px',height: '100%' ,border: '1px solid lightYellow',borderRadius: '30px',backgroundColor: 'lightYellow',marginBottom: '25px',padding: '30px'}}>
                                         <div className="font-weight-bold">Order No: <span style={{color: 'purple'}}>{fd._id.split("").slice(15, 50)}</span></div>
@@ -45,7 +73,7 @@ const PendingOrder = () => {
                                    <p className="mt-2 font-weight-bold">Status: <span className="text-danger">{fd.finalData.status}</span> </p></div>
                                    <div style={{position: 'relative',right: '15px',top:'7px'}} >
                                    <label class="switch">
-                                    <input type="checkbox"/>
+                                    <input onChange={()=>handleChange(fd)} type="checkbox"/>
                                     <span className="slider round"></span>
                                   </label>
                                    </div>
@@ -58,6 +86,8 @@ const PendingOrder = () => {
                                 }</div>
                     </div>
                 </div>
+                }
+                
              </div>
             
         </div>
