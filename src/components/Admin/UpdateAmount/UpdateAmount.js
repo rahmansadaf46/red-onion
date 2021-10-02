@@ -12,7 +12,7 @@ const customStyles = {
         transform: 'translate(-50%, -50%)'
     }
 };
-const UpdateAmount = ({ modalIsOpen, closeModal, food }) => {
+const UpdateAmount = ({ modalIsOpen, closeModal, item }) => {
     const { register, handleSubmit, errors } = useForm();
 
 
@@ -28,14 +28,14 @@ const UpdateAmount = ({ modalIsOpen, closeModal, food }) => {
     const onSubmit = data => {
        
         const finalData= {
-            address: food.finalData.address,
+            address: item.finalData.address,
             amount: data.amount,
-            cart: food.finalData.cart, 
-            email: food.finalData.email,
-            status: food.finalData.status,
+            cart: item.finalData.cart, 
+            email: item.finalData.email,
+            status: item.finalData.status,
         }
         console.log(finalData)
-        fetch(`http://localhost:4200/updateAmount/${food._id}`, {
+        fetch(`http://localhost:4200/updateAmount/${item._id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(finalData)
@@ -65,13 +65,13 @@ const UpdateAmount = ({ modalIsOpen, closeModal, food }) => {
 
             <h4 className="text-center text-danger"><u>Update Amount</u> </h4>
            
-            <div className="font-weight-bold text-center">Order No: <span style={{color: 'purple'}}>{food._id.split("").slice(15, 50)}</span></div>
+            <div className="font-weight-bold text-center">Order No: <span style={{color: 'purple'}}>{item?._id.split("").slice(15, 50)}</span></div>
             <br />
             <form className="p-2" onSubmit={handleSubmit(onSubmit)}>
                 <div className="row d-flex justify-content-center">
                     <div className="form-group col-10 d-flex justify-content-center">
                         <label className="pt-1 " for=""><b>Amount:</b></label>
-                        <input type="text" ref={register({ required: true })} defaultValue={food.finalData.amount} name="amount" placeholder="Enter Amount" className="form-control ml-3" />
+                        <input type="text" ref={register({ required: true })} defaultValue={item?.finalData?.amount} name="amount" placeholder="Enter Amount" className="form-control ml-3" />
                         {errors.name && <span className="text-danger">This field is required</span>}
                         <span  className="pt-1  ml-3 font-weight-bold">$</span>
                     </div>

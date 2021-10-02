@@ -72,7 +72,7 @@ const DeliveryOrder = () => {
                                     <div className="col-md-6">
                                     <div className="d-flex justify-content-center">
                                <div className="text-center "style={{width: '550px', height: '100%', border: '4px solid #DC3545', borderRadius: '30px', backgroundColor: '#F0FFEF', marginBottom: '25px', padding: '30px'}}>
-                                    <h1 className="text-danger">Today's Income: <span className="text-dark">{formatNumber(todayAmount)}$</span></h1>
+                                    <h1 className="text-danger">Today's Income: <span className="text-dark">{formatNumber(todayAmount)||0}$</span></h1>
                                 </div>
                                </div>
                                     </div>
