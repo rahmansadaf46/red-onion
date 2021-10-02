@@ -6,10 +6,10 @@ import './MenuItem.css';
 const MenuItem = ({ item }) => {
     return (
         <div className="col-md-4 d-flex justify-content-center item mb-3">
-            <Link to={`/item/${item.id}`} className="card-item">
+            <Link to={`/item/${item._id}`} className="card-item">
                 <Card style={{ width: '20rem', border: 'none' }}>
                     <div className="px-5 py-3">
-                        <Card.Img variant="top" src={item.image} />
+                        <Card.Img variant="top" src={`http://localhost:4200/${item.image}`}  />
                     </div>
                     <Card.Body>
                         <Card.Title><div style={{ fontSize: '17px' }} className="text-center">
@@ -18,7 +18,7 @@ const MenuItem = ({ item }) => {
                         </Card.Title>
                         <Card.Text>
                             <div className="text-center">
-                                <p style={{ color: 'gray' }}>How we dream about our future</p>
+                                <p style={{ color: 'gray' }}>{item.shortDescription}</p>
                             </div>
 
                         </Card.Text>

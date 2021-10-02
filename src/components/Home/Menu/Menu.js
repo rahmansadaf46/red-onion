@@ -1,40 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import fakeData from '../../../fakeData';
+// import fakeData from '../../../fakeData';
 import { getDatabaseCart } from '../../../utilities/databaseManager';
 import MenuItem from '../MenuItem/MenuItem';
 import './Menu.css';
 
 const Menu = () => {
     const [food, setFood] = useState([]);
-    const [search, setSearch] = useState('');
+    const [allFood, setAllFood] = useState([]);
+    // const [search, setSearch] = useState('');
     const [cart, setCart] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:4200/foods')
+        .then(res => res.json())
+        .then(data => {
+            setFood(data.filter(pd => pd.category === "breakfast"));
+            setAllFood(data);
+            localStorage.setItem('food', JSON.stringify(data));
+         
+        })
+        // const items = fakeData.slice(0, 6);
+        // setFood(items);
+    }, []);
+    console.log(allFood)
+    const foodData = localStorage.getItem('food')
     useEffect(() => {
         const savedCart = getDatabaseCart();
         // console.log(savedCart);
         const productKeys = Object.keys(savedCart);
         const previousCart = productKeys.map(existingKey => {
-            const product = fakeData.find(pd => pd.id === existingKey);
-            // console.log(existingKey, savedCart[existingKey]);
+            const product = JSON.parse(localStorage.getItem('food')).find(pd => pd._id === existingKey);
+            console.log(existingKey, savedCart[existingKey]);
             product.quantity = savedCart[existingKey];
             console.log(product);
             return product;
         })
         // setProducts(previousCart);
         setCart(previousCart);
-    }, [])
+    }, [allFood,foodData])
 
-    useEffect(() => {
-        const category = fakeData.filter(pd => pd.category === search);
-        setFood(category);
-    }, [search])
-    useEffect(() => {
-        const items = fakeData.slice(0, 6);
-        setFood(items);
-    }, []);
+ 
+
     const handleSearch = value => {
         // console.log(value);
-        setSearch(value);
+        const category = allFood.filter(pd => pd.category === value);
+        setFood(category);
+        // setSearch(value);
 
     }
 

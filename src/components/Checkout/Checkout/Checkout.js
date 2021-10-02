@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import fakeData from '../../../fakeData';
+// import fakeData from '../../../fakeData';
 import { addToDatabaseCart, getDatabaseCart, minusToDatabaseCart, processOrder, removeFromDatabaseCart } from '../../../utilities/databaseManager';
 import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
@@ -12,64 +12,67 @@ const Checkout = () => {
     
 
     const handleAddProduct = (product) => {
-        const toBeAddedKey = product.id;
-        const sameProduct = cart.find(pd => pd.id === toBeAddedKey);
+        const toBeAddedKey = product._id;
+        const sameProduct = cart.find(pd => pd._id === toBeAddedKey);
         let newCount;
-        let newCart;
+        // let newCart;
         if (sameProduct) {
             newCount = sameProduct.quantity + 1;
             sameProduct.quantity = newCount;
-            const others = cart.filter(pd => pd.id !== toBeAddedKey);
-            newCart = [...others, sameProduct]
-            addToDatabaseCart(sameProduct.id, newCount);
+            // const others = cart.filter(pd => pd._id !== toBeAddedKey);
+            // newCart = [...others, sameProduct]
+            addToDatabaseCart(sameProduct._id, newCount);
         }
         else {
             product.quantity = count;
-            newCart = [...cart, product];
-            addToDatabaseCart(product.id, product.quantity);
+            // newCart = [...cart, product];
+            addToDatabaseCart(product._id, product.quantity);
         }
-        setCart(newCart);
+        // setCart(newCart);
 
     }
 
     const handleRemoveProduct = (product) => {
-        const toBeAddedKey = product.id;
-        const sameProduct = cart.find(pd => pd.id === toBeAddedKey);
+        const toBeAddedKey = product._id;
+        const sameProduct = cart.find(pd => pd._id === toBeAddedKey);
         let newCount;
-        let newCart;
+        // let newCart;
         if (sameProduct) {
             newCount = sameProduct.quantity - 1;
             sameProduct.quantity = newCount;
-            const others = cart.filter(pd => pd.id !== toBeAddedKey);
-            newCart = [...others, sameProduct]
-            minusToDatabaseCart(sameProduct.id, newCount);
+            // const others = cart.filter(pd => pd._id !== toBeAddedKey);
+            // newCart = [...others, sameProduct]
+            minusToDatabaseCart(sameProduct._id, newCount);
         }
         else {
             product.quantity = count;
-            newCart = [...cart, product];
-            minusToDatabaseCart(product.id, product.quantity);
+            // newCart = [...cart, product];
+            minusToDatabaseCart(product._id, product.quantity);
 
         }
 
         if (product.quantity === 0) {
-            removeFromDatabaseCart(product.id);
+            removeFromDatabaseCart(product._id);
+            const newCart = cart.filter(pd => pd._id !== product._id);
+            setCart(newCart);
+            
         }
-        setCart(newCart);
+        // setCart(newCart);
 
 
     }
-
+    const foodData = localStorage.getItem('food')
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
         const previousCart = productKeys.map(existingKey => {
-            const product = fakeData.find(pd => pd.id === existingKey);
+            const product = JSON.parse(foodData).find(pd => pd._id === existingKey);
             product.quantity = savedCart[existingKey];
             return product;
         })
 
         setCart(previousCart);
-    }, [])
+    }, [foodData])
 
     let subTotal = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -211,7 +214,7 @@ const Checkout = () => {
                                 <div>
                                     <div>
                                         {
-                                            cart.map(item => <CartItem showAddToCart={true} handleRemoveProduct={handleRemoveProduct} handleAddProduct={handleAddProduct} key={item.id} item={item}></CartItem>)
+                                            cart.map(item => <CartItem showAddToCart={true} handleRemoveProduct={handleRemoveProduct} handleAddProduct={handleAddProduct} key={item._id} item={item}></CartItem>)
                                         }
 
                                     </div>

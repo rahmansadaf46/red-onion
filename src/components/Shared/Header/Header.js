@@ -33,7 +33,7 @@ const Header = ({ cart }) => {
                 const email= sessionStorage.getItem('email')
                 const items = data.filter(item => item.finalData.email === email)
                 // console.log(items,data)
-                setFood(items);
+                setFood(items.reverse());
             })
     }, [])
     const logout = () => {
@@ -41,6 +41,7 @@ const Header = ({ cart }) => {
         localStorage.clear();
         window.location.assign("/");
     }
+
     return (
         <div>
             <Navbar fixed="top" className=" bg-white" expand="lg">
@@ -53,7 +54,7 @@ const Header = ({ cart }) => {
                     </Nav>
                     <Form inline>
 
-                        {loggedInUser.email === "darklordsadaf@gmail.com" || sessionStorage.getItem('email') === "darklordsadaf@gmail.com" ?      <div className="mr-2">    <Link to='/admin/pending' className="cart "><SupervisorAccountIcon /></Link></div> : <></>}
+                        {loggedInUser.email === "darklordsadaf@gmail.com" || sessionStorage.getItem('email') === "darklordsadaf@gmail.com"  ?      <div className="mr-2">    <Link to='/admin/pending' className="cart "><SupervisorAccountIcon /></Link></div> : <></>}
               
 
                         {
@@ -95,14 +96,25 @@ const Header = ({ cart }) => {
                                 style={{ width: '75%',padding:'10px' }}
                             >
                                 {
-                                    food.map(fd=><div style={{ width: '450px',height: '100%' ,border: '3px solid brown',backgroundColor: 'lightYellow',marginBottom: '25px',padding: '30px'}}>
+                                    food.reverse().map(fd=><div style={{ width: '450px',height: '100%' ,border: '3px solid brown',backgroundColor: 'lightYellow',marginBottom: '25px',padding: '30px'}}>
                                          <div className="font-weight-bold mb-4">Order No: <span style={{color: 'purple'}}>{fd._id.split("").slice(15, 50)}</span></div>  
-                                        {fd.finalData.cart.map(item=><p style={{fontSize: '18px'}}><span className="font-weight-bold text-danger">{item.title}</span> <span className="font-weight-bold text-dark">: {item.quantity}pcs</span></p>)} <br /><p className="mt-2 font-weight-bold">Status: {
+                                        {fd.finalData.cart.map(item=><p style={{fontSize: '18px'}}><span className="font-weight-bold text-danger">{item.title}</span> <span className="font-weight-bold text-dark">: {item.quantity}pcs</span></p>)} <br />
+                                        <div className="row">
+                                        <div className="col-md-6">
+                                        <p className="mt-2 font-weight-bold">Status: {
                                             fd.finalData.status === "Pending" ? <span className="text-danger">{fd.finalData.status}</span> : <span className="text-success">{fd.finalData.status}</span>
-                                        } </p></div>)
+                                        } </p>
+                                        </div>
+                                        <div className="col-md-6 d-flex justify-content-end">
+ 
+                                        <p className="mt-2 font-weight-bold">Amount: <span className="text-danger">{fd.finalData.amount}$</span></p>
+                                        </div>
+                                        </div>
+                                      
+                                        </div>)
                                 }
                                 {
-                                    food.length === 0 && <div style={{ width: '300px',height: '100%' ,border: '1px solid black', marginBottom: '10px',padding: '10px'}}><p>No History Found</p></div>
+                                    food.length === 0 && <div class="text-danger text-center"  style={{  width: '350px',height: '100%' ,border: '3px solid brown',backgroundColor: 'lightYellow',marginBottom: '25px',padding: '30px'}}><h3>No History Found</h3></div>
                                 }
                                 
                                
