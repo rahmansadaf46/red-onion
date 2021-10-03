@@ -10,7 +10,7 @@ const PendingOrder = () => {
     const email = sessionStorage.getItem('email')
 
     useEffect(() => {
-        if (email !== "darklordsadaf@gmail.com") {
+        if (email !== "abirsharkarmr9@gmail.com") {
             sessionStorage.clear();
             localStorage.clear();
             window.location.assign("/");

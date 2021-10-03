@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { UserContext } from '../../../App';
+// import { UserContext } from '../../../App';
 import logo from '../../../fakeData/images/logo2.png';
 
 
 import { createUserWithEmailAndPassword, initializeLoginFramework } from '../firebase/loginManager';
 
 const SignUp = () => {
-    const [ setLoggedInUser] = useContext(UserContext);
+    // const [ setLoggedInUser] = useContext(UserContext);
     const [user, setUser] = useState({
         isSignedIn: false,
         name: '',
@@ -72,7 +72,7 @@ const SignUp = () => {
         password: "",
         confirmPassword: "",
     });
-    let pass1, pass2;
+    // let pass1, pass2;
     const handleFormValidation = (e) => {
         let isFieldValid = true;
         const newError = { ...errors };
@@ -105,29 +105,29 @@ const SignUp = () => {
 
             isFieldValid = isPasswordLengthValid && passwordHasNumber;
 
-            if (e.target.name === "password") {
-                pass1 = e.target.value;
-                if (!isFieldValid) {
-                    newError[e.target.name] = "Password is not valid";
-                    setErrors(newError);
-                } else {
-                    newError[e.target.name] = "";
-                    setErrors(newError);
-                }
-            }
-            if (e.target.name === "confirmPassword") {
-                pass2 = e.target.value;
-                if (pass1 !== pass2) {
-                    newError[e.target.name] = "Password is not matched";
-                    isFieldValid = false;
-                    setErrors(newError);
+            // if (e.target.name === "password") {
+            //     pass1 = e.target.value;
+            //     if (!isFieldValid) {
+            //         newError[e.target.name] = "Password is not valid";
+            //         setErrors(newError);
+            //     } else {
+            //         newError[e.target.name] = "";
+            //         setErrors(newError);
+            //     }
+            // }
+            // if (e.target.name === "confirmPassword") {
+            //     pass2 = e.target.value;
+            //     if (pass1 !== pass2) {
+            //         newError[e.target.name] = "Password is not matched";
+            //         isFieldValid = false;
+            //         setErrors(newError);
 
-                } else {
-                    isFieldValid = true;
-                    newError[e.target.name] = "";
-                    setErrors(newError);
-                }
-            }
+            //     } else {
+            //         isFieldValid = true;
+            //         newError[e.target.name] = "";
+            //         setErrors(newError);
+            //     }
+            // }
         }
 
         if (isFieldValid) {
@@ -203,7 +203,7 @@ const SignUp = () => {
     }
     const handleResponse = (res, redirect) => {
         setUser(res);
-        setLoggedInUser(res);
+        // setLoggedInUser(res);
         if (redirect) {
             history.replace(from);
         }
